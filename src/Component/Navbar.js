@@ -1,18 +1,27 @@
 
 import React from 'react';
-
+import { signOut } from "firebase/auth";
 import { Link } from 'react-router-dom';
+import auth from '../firebase.init';
 
 const Navbar = () => {
+    const user = auth.currentUser;
+    const handleSignOut = () => {
+        const logOut = window.confirm("Do your Want to log out")
+        if (logOut) {
+            signOut(auth).then(() => {
+                // Sign-out successful.
+            }).catch((error) => {
+                // An error happened.
+            });
+        }
+    }
 
     const navItem =
         <>
-            <li>Home</li>
-            {/* <li><Link to="dashboard">Dashboard</Link></li>
-            <li><Link to="community">Community</Link></li>
-            <li><Link to="allBooks">Books</Link></li>
-            <li><Link to="about">About</Link></li>
-            <li><Link to="login">Login</Link></li> */}
+            <li><Link to="/">Home</Link></li>
+            <li><Link to="students">students</Link></li>
+            {user ? <li><button onClick={() => handleSignOut()}>SignOut</button></li> : <li><Link to="login">Login</Link></li>}
 
         </>
     return (

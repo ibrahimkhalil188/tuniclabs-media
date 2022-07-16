@@ -3,9 +3,13 @@ import React from 'react';
 import { signOut } from "firebase/auth";
 import { Link } from 'react-router-dom';
 import auth from '../firebase.init';
+import { useAuthState } from 'react-firebase-hooks/auth';
 
 const Navbar = () => {
-    const user = auth.currentUser;
+    const [user, loading] = useAuthState(auth);
+    if (loading) {
+        return <p>Loading...</p>
+    }
     const handleSignOut = () => {
         const logOut = window.confirm("Do your Want to log out")
         if (logOut) {
@@ -16,12 +20,17 @@ const Navbar = () => {
             });
         }
     }
-
     const navItem =
         <>
             <li><Link to="/">Home</Link></li>
-            <li><Link to="students">students</Link></li>
-            {user ? <li><button onClick={() => handleSignOut()}>SignOut</button></li> : <li><Link to="login">Login</Link></li>}
+
+
+            {user ? <>
+                <li><Link to="students">students</Link></li>
+                <li><button onClick={() => handleSignOut()}>SignOut</button></li>
+            </>
+                :
+                <li><Link to="login">Login</Link></li>}
 
         </>
     return (

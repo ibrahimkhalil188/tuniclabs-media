@@ -2,7 +2,7 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from 'firebase/auth'
 
-const firebaseConfig = {
+export const firebaseConfig = {
     apiKey: "AIzaSyDDSy7Yu7Kn0kn8biiRBA-n7xoyCdoKpGw",
     authDomain: "tuni-clabs-media.firebaseapp.com",
     projectId: "tuni-clabs-media",
